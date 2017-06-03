@@ -11,7 +11,7 @@ echo "========================================="
 echo "=> Create admin user/password"
 mongo admin \
       --eval "var adminUserName = '$DB_ADMIN_USER_NAME'; \
-              var adminPassword = '$DB_ADMIN_USER_PASS'" \
+              var adminPassword = '$DB_ADMIN_USER_PASS';" \
               create_admin.js
 
 
@@ -24,7 +24,7 @@ mongo admin \
               var appUserName   = '$DB_APP_USER_NAME'; \
               var appPassword   = '$DB_APP_USER_PASS'; \
               var adminUserName = '$DB_ADMIN_USER_NAME'; \
-              var adminPassword = '$DB_ADMIN_USER_PASS'" \
+              var adminPassword = '$DB_ADMIN_USER_PASS';" \
               create_user.js
 
 
@@ -37,5 +37,5 @@ mongo $DB_APP_NAME \
               var appUserName = '$DB_APP_USER_NAME'; \
               var appPassword = '$DB_APP_USER_PASS'; \
               var userName    = '$APP_USER'; \
-              var password    = '$APP_PASS'" \
+              var password    = '$APP_PASS';" \
               insert_user.js

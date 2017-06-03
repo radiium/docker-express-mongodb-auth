@@ -20,12 +20,14 @@ if [[ ! -d "${DIRECTORY}" && ! -L "${DIRECTORY}" ]] ; then
     (cd ./client ; npm install)
 fi
 
-# Build and run container
+# Build app and db container
 docker-compose build
+
+# Run and init db container
 docker-compose up -d mongo
 docker exec -it node_db  bash -c "cd /scripts ; ls -la ; ./init.sh"
 
-# Init db and restart app
+# Run app container
 docker-compose up -d web
 #docker exec -it node_app bash -c "cd app ; pm2 kill ; pm2 start --no-daemon process.json --env production"
 
