@@ -33,8 +33,14 @@ if (process.env.NODE_ENV === 'development') {
     app.use(logger('common'));
 }
 
-dotenv.config({ path: '/app/config/.env' });
-
+dotenv.config({ path: '/app/config/app.env' });
+var dbUrl = 'mongodb://' +
+            process.env.DB_USERNAME + ':' +
+            process.env.DB_PASSWORD + '@' +
+            process.env.DB_HOST + ':' +
+            process.env.DB_PORT + '/' +
+            process.env.DB_BASE
+            .toString();
 
 
 //-----------------------------------------------------------------------------
@@ -72,7 +78,9 @@ app.use(helmet());
 // MongoDB
 mongoose.Promise = global.Promise;
 var options = { server: { socketOptions: { keepAlive: 1 } } };
-mongoose.connect(process.env.DB_URL, options, function(err) {
+
+log.info('db url: ' + dbUrl);
+mongoose.connect(dbUrl, options, function(err) {
     if (err) { log.info(err); }
     else     { log.info('Connected to mongodb'); }
 });
@@ -110,7 +118,7 @@ app.use(session({
     },
     
     store: new MongoStore({
-        url: process.env.DB_URL,
+        url: dbUrl,
         /*
         db: 'express',
         host: 'oceanic.mongohq.com',

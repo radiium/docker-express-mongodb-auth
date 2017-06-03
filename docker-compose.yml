@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    container_name: flux_app
+    container_name: node_app
     build: ./app
     volumes:
       - ./app:/app
@@ -12,11 +12,15 @@ services:
       - "8083:8080"
     
   mongo:
-    container_name: flux_db
-    image: mongo
+    container_name: node_db
+    build: ./db
     volumes:
       - ./db/data:/data/db
       - ./db/scripts/:/scripts/
     ports:
       - "27017:27017"
-    command: sh -c "cd /scripts/ ; ./init.sh"
+    env_file:
+      - ./db/mongo.env
+
+
+

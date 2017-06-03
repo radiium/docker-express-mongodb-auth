@@ -1,12 +1,32 @@
 #!/bin/sh
 
 # Build container
-# ttab  -a iTerm2 
+# ttab  -a iTerm2
 
-docker-compose down
 
+# Check if container already running
+IS_RUNNING_APP=$(docker inspect --format="{{.State.Running}}" node_app 2> /dev/null)
+IS_RUNNING_DB=$(docker inspect --format="{{.State.Running}}" node_db  2> /dev/null)
+if [[ $IS_RUNNING_APP || $IS_RUNNING_DB ]] ; then
+    echo "Shutdown container"
+    docker-compose down
+fi
+
+
+# Check if node module does not exist
+DIRECTORY=./app/node_modules
+if [[ ! -d "${DIRECTORY}" && ! -L "${DIRECTORY}" ]] ; then
+    echo "Install npm packages"
+    (cd ./client ; npm install)
+fi
+
+# Build and run container
 docker-compose build
-docker-compose up
+docker-compose up -d mongo
+docker exec -it node_db  bash -c "cd /scripts ; ls -la ; ./init.sh"
 
+# Init db and restart app
+docker-compose up -d web
+#docker exec -it node_app bash -c "cd app ; pm2 kill ; pm2 start --no-daemon process.json --env production"
 
-#docker save 19885890b442 | bzip2 | pv | ssh  -p 1337 root@vps316332.ovh.net:/home 'bunzip2 | docker load'
+docker-compose logs
