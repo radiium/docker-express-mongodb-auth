@@ -1,0 +1,36 @@
+<div id="signup-page">
+
+    <% if (data.message != null) { %>
+    <div class=""><%= message %></div>
+    <% } %>
+
+    <div>
+        <form id="signup-form" action="/signup" method="post">
+            <h1>Signup</h1>
+
+            <div class="row">
+                <label>User name</label>
+                <input type="text" class="" name="username">
+            </div>
+
+            <div class="row">
+                <label>Email</label>
+                <input type="text" class="" name="usermail">
+            </div>
+
+            <div class="row">
+                <label>Password</label>
+                <input type="password" class="" name="password" />
+            </div>
+            <div class="row">
+                <label>Password verification</label>
+                <input type="password" class="" name="password2" />
+            </div>
+
+            <div class="signup-btn">
+                <input type="submit" class="" value="Signup" />
+            </div>
+        </form>
+    </div>
+    
+</div>

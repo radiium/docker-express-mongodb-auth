@@ -1,0 +1,18 @@
+<div id="navigation">
+
+    <div id="nav-box">
+        <div class="nav-item"><a href="/">Home</a></div>
+        <div class="nav-item"><a href="">page2</a></div>
+    </div>
+
+    <div id="login-box">
+        <% if (data.isAuth) { %>
+        <div class="nav-item"><a href="/profile">profile</a></div>
+        <div class="nav-item"><a href="/logout">logout</a></div>
+        <% } else { %>
+        <div class="nav-item"><a href="/login">login</a></div>
+        <div class="nav-item"><a href="/signup">signup</a></div>
+        <% } %>
+    </div>
+
+</div>

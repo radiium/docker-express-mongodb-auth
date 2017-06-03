@@ -1,0 +1,28 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+
+
+/******************
+    navigation
+******************/
+#navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid gray;
+}
+
+#nav-box,
+#login-box {
+    display: flex;
+    flex-direction: row
+}
+.nav-item {
+    margin: 5px;
+}

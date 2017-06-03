@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  web:
+    container_name: flux_app
+    build: ./app
+    volumes:
+      - ./app:/app
+    links:
+      - mongo
+    ports:
+      - "8083:8080"
+    
+  mongo:
+    container_name: flux_db
+    image: mongo
+    volumes:
+      - ./db/data:/data/db
+      - ./db/scripts/:/scripts/
+    ports:
+      - "27017:27017"
+    command: sh -c "cd /scripts/ ; ./init.sh"

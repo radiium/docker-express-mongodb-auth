@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <script type='text/javascript' src="/javascripts/jquery-3.2.1.min.js"></script>
+    </head>
+
+    <body>
+        <!-- Toolbar and navigation -->
+        <%- include('partials/navigation.ejs', {data: data}); %>
+
+        <!-- Content -->
+        <div id="content">
+            <% if (data.type === 'index') { %>
+                //<%- include('partials/login.ejs', {data: data}); %>
+
+            <% } else if (data.type === 'login') { %>
+                <%- include('partials/login.ejs', {data: data}); %>
+
+            <% } else if (data.type === 'signup') { %>
+                <%- include('partials/signup.ejs', {data: data}); %>
+
+            <% } else if (data.type === 'profile') { %>
+                <%- include('partials/profile.ejs', {data: data}); %>
+
+            <% } %>
+        </div>
+
+        <!-- Custom script -->
+        <script type='text/javascript' src="/javascripts/main.js"></script>
+    </body>
+</html>

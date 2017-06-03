@@ -1,0 +1,27 @@
+{
+  "apps": [{
+    "name": "flux",
+    "script": "/app/bin/www",
+    "watch": true,
+    "ignore_watch" : [
+        "/app/node_modules",
+        "/app/public",
+        "/app/README.MD",
+        "/app/package.json",
+        "/app/process.json",
+        "/app/Dockerfile"
+    ],
+    "watch_options": {
+      "followSymlinks": false
+    },
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "env_production": {
+       "NODE_ENV": "production"
+    },
+    "combine_logs": true,
+    "autorestart": false
+  }]
+}
+
