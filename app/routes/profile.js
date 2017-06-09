@@ -115,12 +115,8 @@ router.delete('/profile', isLoggedIn, function(req, res) {
             log.info(data.msg);
             return res.send(data);
 
-        // Update user
+        // Delete user
         } else {
-            
-            log.info('user');
-            log.info(user._id);
-
             User.delete(username, function(err, user) {
                 // Error
                 if (err) {

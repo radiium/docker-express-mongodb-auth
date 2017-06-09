@@ -70,6 +70,8 @@ a {
     font-size: 1rem;
 }
 
+input {pointer-events:none;}
+
 /* notif */
 .notif {
     

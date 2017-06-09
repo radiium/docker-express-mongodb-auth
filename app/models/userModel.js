@@ -4,7 +4,8 @@ var crypto = require('crypto');
 var log    = require('winston');
 
 
-
+//-----------------------------------------------------------------------------
+// Object user
 function User(user) {
     this.id       = user.id;
     this.username = user.username;
@@ -15,7 +16,7 @@ function User(user) {
 module.exports = User;
 
 
-
+//-----------------------------------------------------------------------------
 // save user data.
 User.prototype.save = function(callback) {
     var user = {
@@ -34,6 +35,8 @@ User.prototype.save = function(callback) {
     });
 };
 
+//-----------------------------------------------------------------------------
+// Update user infos
 User.update = function(username, user, callback) {
     var db = mongo.get();
     db.collection('users', function(err, collection) {
@@ -48,6 +51,8 @@ User.update = function(username, user, callback) {
     });
 };
 
+//-----------------------------------------------------------------------------
+// Delete user
 User.delete = function(username, callback) {
     var db = mongo.get();
     db.collection('users', function(err, collection) {
@@ -63,7 +68,8 @@ User.delete = function(username, callback) {
 };
 
 
-// read user data.
+//-----------------------------------------------------------------------------
+// Get user data by Name
 User.getByName = function(username, callback) {
     var db = mongo.get();
     db.collection('users').findOne({username: username }, function(err, user) {
@@ -74,7 +80,8 @@ User.getByName = function(username, callback) {
     });
 };
 
-// read user data.
+//-----------------------------------------------------------------------------
+// Get user data by ID
 User.getById = function(id, callback) {
     var db = mongo.get();
     db.collection('users').findOne({id: id }, function(err, user) {
@@ -85,7 +92,7 @@ User.getById = function(id, callback) {
     });
 };
 
-
+//-----------------------------------------------------------------------------
 // Check if username or usermail exist
 User.check = function(username, usermail, callback) {
     var db = mongo.get();
@@ -104,6 +111,9 @@ User.check = function(username, usermail, callback) {
 
 
 
+//-----------------------------------------------------------------------------
+// Utils
+
 // Generate password hash
 User.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -119,46 +129,3 @@ User.validPassword = function(password, password2) {
 User.generateRandomId = function() {
     return crypto.randomBytes(12).toString('hex');
 }
-
-
-
-/*
-
-Users = function(app, mongo) {
-
-    // Find user by ID
-    Users.prototype.findById = function(id, done) {
-        var query = {_id: id};
-        return this.findOne(query, done);
-    }
-
-    // Find one user by query
-    Users.prototype.findOne = function(query, done) {
-        var user = db.collection('users').findOne(query);
-        if (!user) {
-            return done('User not found', null);
-        }
-        return done(null, user);
-    }
-
-    // Generate password hash
-    Users.prototype.generateHash = function(password) {
-        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-    };
-
-    // Compare 2 password hash
-    Users.prototype.validPassword = function(password) {
-        return bcrypt.compareSync(password, this.password);
-    };
-
-    Users.prototype.addUser = function() {
-        console.log("add user");
-    }
-
-    Users.prototype.getAll = function() {
-        return "all users " + mongo.dbUsers;
-    }
-}
-
-module.exports = Users;
-*/
