@@ -1,17 +1,23 @@
+// Load environment variables
+require('dotenv').config({ path: '/app/config/app.env' });
+
+// Module dependencies.
 var express       = require('express');
 var session       = require('express-session');
 var MongoStore    = require('connect-mongo')(session);
 var cookieSession = require('cookie-session')
 var path          = require('path');
+var fs            = require('fs');
 var favicon       = require('serve-favicon');
 var logger        = require('morgan');
 var log           = require('winston');
 var helmet        = require('helmet');
 var cookieParser  = require('cookie-parser');
 var bodyParser    = require('body-parser');
-var dotenv        = require('dotenv');
+var flash         = require("connect-flash");
 
-var mongoose      = require('mongoose');
+//var MongoClient   = require('mongodb').MongoClient
+var mongo         = require('./services/mongoService');  
 var passport      = require('passport');  
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -33,14 +39,6 @@ if (process.env.NODE_ENV === 'development') {
     app.use(logger('common'));
 }
 
-dotenv.config({ path: '/app/config/app.env' });
-var dbUrl = 'mongodb://' +
-            process.env.DB_USERNAME + ':' +
-            process.env.DB_PASSWORD + '@' +
-            process.env.DB_HOST + ':' +
-            process.env.DB_PORT + '/' +
-            process.env.DB_BASE
-            .toString();
 
 
 //-----------------------------------------------------------------------------
@@ -64,9 +62,9 @@ app.use(express.static(path.join(__dirname, 'public') ));//, { redirect : false 
 
 
 
-
 //-----------------------------------------------------------------------------
 // Tools
+app.use(flash());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -75,59 +73,42 @@ app.use(helmet());
 
 
 //-----------------------------------------------------------------------------
-// MongoDB
-mongoose.Promise = global.Promise;
-var options = { server: { socketOptions: { keepAlive: 1 } } };
-
-log.info('db url: ' + dbUrl);
-mongoose.connect(dbUrl, options, function(err) {
-    if (err) { log.info(err); }
-    else     { log.info('Connected to mongodb'); }
+// Test MongoDB connection
+mongo.connect(function(err, db) {
+    if (err) {
+        log.info('Test Mongodb connect => error');
+        process.exit(1)
+    } else {
+        log.info('Test Mongodb connect => succes');
+        db.close()
+    }
 });
-// Check opened connection
-mongoose.connection.on('open', function (err) {
-    if (err) { throw err; }
-    console.log("Mongoose connection opened on process " + process.pid);
-});
-// Error handler
-mongoose.connection.on('error', function (err) { console.log(err); });
-// Reconnect when closed
-mongoose.connection.on('disconnected', function () { self.connectToDatabase(); });
-
 
 
 
 //-----------------------------------------------------------------------------
-// Authentication
+// Configure session
 require('./config/passport');
-app.set('trust proxy', 1) // trust first proxy
-//var expiryDate = new Date( Date.now() + ((60 * 60 * 1000) * 2) ); // 2 hour
+app.set('trust proxy', 1);
 
-var twoHours = 3600000 * 2;
+var expireDate = new Date(Date.now() + 7200000);
 
 app.use(session({
     secret: process.env.SECRET,
     name : 'SupaCookie',
     resave: false,
     saveUninitialized: false,
+
     cookie : {
-        //domain: process.env.HOST,
         httpOnly: true,
-        maxAge: twoHours,
-        expires: new Date(Date.now() + twoHours)
+        maxAge: 7200000,
+        expires: expireDate
     },
     
     store: new MongoStore({
-        url: dbUrl,
-        /*
-        db: 'express',
-        host: 'oceanic.mongohq.com',
-        port: 10065,  
-        username: 'cm',
-        password: 'cm',
-        */
+        url: mongo.url,
         collection: 'session', 
-        auto_reconnect:true
+        auto_reconnect: true
     })
 }));
 
@@ -144,8 +125,15 @@ app.use(passport.session());
 //-----------------------------------------------------------------------------
 // Routes Configuration
 log.info('[SERVER] Routes Configuration');
+
 app.use(require('./routes/index'));
-app.use(require('./routes/users'));
+app.use(require('./routes/profile'));
+app.use(require('./routes/login'));
+
+
+
+//-----------------------------------------------------------------------------
+// error handler
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -154,15 +142,19 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+app.use(function(err, req, res, next) {
+    var data = {};
+    data.title   = 'error';
+    data.type    = 'error';
+    data.isAuth  = req.isAuthenticated();
+    data.message = err.message;
+    //data.error   = req.app.get('env') === 'development' ? err : {};
+    data.error   = req.app.get('env') === 'production' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('index', {data: data});
 });
 
 module.exports = app;

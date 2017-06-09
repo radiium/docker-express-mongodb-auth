@@ -1,34 +1,38 @@
 <div id="signup-page">
 
-    <% if (data.message != null) { %>
-    <div class=""><%= message %></div>
+    <% if (data.message) { %>
+    <div class=""><%- data.message %></div>
     <% } %>
 
-    <div>
+    <div class="form-box">
         <form id="signup-form" action="/signup" method="post">
             <h1>Signup</h1>
 
-            <div class="row">
+            <% if (data.message) { %>
+            <div id="notif-signup" class="notif"><%- data.message %></div>
+            <% } %>
+
+            <div class="field-box">
                 <label>User name</label>
                 <input type="text" class="" name="username">
             </div>
 
-            <div class="row">
+            <div class="field-box">
                 <label>Email</label>
                 <input type="text" class="" name="usermail">
             </div>
 
-            <div class="row">
+            <div class="field-box">
                 <label>Password</label>
                 <input type="password" class="" name="password" />
             </div>
-            <div class="row">
+            <div class="field-box">
                 <label>Password verification</label>
                 <input type="password" class="" name="password2" />
             </div>
 
-            <div class="signup-btn">
-                <input type="submit" class="" value="Signup" />
+            <div class="form-btn">
+                <input type="submit" class="" value="Login" />
             </div>
         </form>
     </div>

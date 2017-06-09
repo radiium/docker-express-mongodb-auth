@@ -2,6 +2,9 @@
 
 # Environment variables
 /app/node_modules
+/app/config/.env
+
+
 
 
 

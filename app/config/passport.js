@@ -1,5 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
-var User     = require('../models/userModel');
+var flash         = require("connect-flash");
+var User          = require('../models/userModel');
 var log           = require('winston');
 
 
@@ -7,12 +8,13 @@ module.exports = function(passport) {
 
     // Serialize User
     passport.serializeUser(function(user, done) {
+        log.info(user);
         done(null, user.id);
     });
 
     // Deserialize User
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
+        User.getById(id, function(err, user) {
             done(err, user);
         });
     });
@@ -24,33 +26,29 @@ module.exports = function(passport) {
         passReqToCallback: true,
     },
     function(req, username, password, done) {
+        var usermail = req.body.usermail;
 
-        //if (!user)
-        //    return done(null, false, req.flash('loginMessage', 'No user found.'));
-            
-        process.nextTick(function() {
-            User.findOne({ 'username' :  username }, function(err, user) {
+        process.nextTick(function(usermail) {
+            User.check(username, usermail, function(err, user) {
                 // Error
                 if (err) {
                     log.info(err);
                     return done(err);
                 }
 
-                // User not found
+                // User already exist
                 if (user) {
-                    log.info('User not found');
-                    return done(null, false);
-                }
-                /*
-                if (!user)
-                    return done(null, false, req.flash('loginMessage', 'No user found.'));
-                */
-                else {
-                    var newUser = new User();
+                    var msg = 'User already exist';
+                    log.info(msg);
+                    return done(null, false, {message: msg});
+                } else {
+                    var newUser = {};
+                    newUser.id       = User.generateRandomId();
                     newUser.username = username;
                     newUser.usermail = req.body.usermail;
-                    newUser.password = newUser.generateHash(password);
-                    newUser.save(function(err) {
+                    newUser.password = User.generateHash(password);
+                    var nUser = new User(newUser);
+                    nUser.save(function(err) {
                         if (err) {
                             throw err;
                         }
@@ -61,40 +59,35 @@ module.exports = function(passport) {
         });
     }));
 
-   // Login Localstrategy
+
+    // Login Localstrategy
     passport.use('local-login', new LocalStrategy({
         usernameField : 'username',
         passwordField : 'password',
-        passReqToCallback : true
+        passReqToCallback : true,
     },
     function(req, username, password, done) {
-        User.findOne({ 'username' :  username }, function(err, user) {
+        User.getByName(username, function(err, user) {
             // Error
             if (err) {
                 log.info(err);
                 return done(err);
             }
 
+            var msg = '';
             // User not found
             if (!user) {
-                log.info('User not found');
-                return done(null, false);
+                msg = 'User not found';
+                log.info(msg);
+                return done(null, false, {message: msg});
             }
-            /*
-            if (!user)
-                return done(null, false, req.flash('loginMessage', 'No user found.'));
-            */
-
 
             // Password not match
-            if (!user.validPassword(password)) {
-                log.info('Invalid password');
-                return done(null, false);
+            if (!User.validPassword(password, user.password)) {
+                msg = 'Invalid password';
+                log.info(msg);
+                return done(null, false, {message: msg});
             }
-            /*
-            if (!user.validPassword(password))
-                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
-            */
 
             log.info('Authentication done');
             return done(null, user);

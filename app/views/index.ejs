@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <script type='text/javascript' src="/javascripts/jquery-3.2.1.min.js"></script>
+        <!-- Custom script -->
+        <script type='text/javascript' src="/javascripts/main.js"></script>
     </head>
 
     <body>
@@ -25,10 +27,10 @@
             <% } else if (data.type === 'profile') { %>
                 <%- include('partials/profile.ejs', {data: data}); %>
 
+            <% } else if (data.type === 'error') { %>
+                <%- include('partials/error.ejs', {data: data}); %>
+
             <% } %>
         </div>
-
-        <!-- Custom script -->
-        <script type='text/javascript' src="/javascripts/main.js"></script>
     </body>
 </html>

@@ -36,6 +36,8 @@ mongo $DB_APP_NAME \
       --eval "var appDbName   = ''; \
               var appUserName = '$DB_APP_USER_NAME'; \
               var appPassword = '$DB_APP_USER_PASS'; \
+              var userId      = '$APP_ID'; \
               var userName    = '$APP_USER'; \
+              var userMail    = '$APP_MAIL'; \
               var password    = '$APP_PASS';" \
               insert_user.js
