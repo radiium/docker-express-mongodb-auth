@@ -152,14 +152,22 @@ jQuery(document).ready(function() {
         $( '#profil-box-del' ).show();
     });
 
+    // drop down add
+    $( '#dropdown-add-btn' ).click(function(event) {
+        event.stopPropagation();
+        $( '#dropdown-profile-content' ).hide();
+        $( '#dropdown-add-content' ).toggle()
+    })
  
-    // drop down menu
+    // drop down profile
     $( '#dropdown-profile-btn' ).click(function(event) {
         event.stopPropagation();
+        $( '#dropdown-add-content' ).hide();
         $( '#dropdown-profile-content' ).toggle()
     })
     $(document).on("click", function () {
         $( '#dropdown-profile-content' ).hide();
+        $( '#dropdown-add-content' ).hide();
     });
 
 

@@ -1,26 +1,37 @@
 <div id="navigation">
 
     <div id="nav-box">
-        <div class="nav-item"><a href="/">Home</a></div>
-        <div class="nav-item"><a href="">page2</a></div>
+        <div class="nav-item nav-btn"><a href="/">Home</a></div>
+        <div class="nav-item nav-btn"><a href="">page2</a></div>
     </div>
 
     <div id="login-box">
         <% if (typeof data.user !== 'undefined' && typeof data.user !== '' ) { %>
+        <div id="dropdown-add" class="nav-item">
+            <div id="dropdown-add-btn" class="dropdown-btn nav-btn">
+                <span id="cross">+</span>
+                <div class="triangle"></div>
+            </div>
+            <div id="dropdown-add-content" class="dropdown-content">
+                <div id="article-btn"><a href="#">Add article</a></div>
+                <div class="dpLast"><a href="#">Add image</a></div>
+            </div>
+        </div>
+
         <div id="dropdown-profile" class="nav-item">
-            <div id="dropdown-profile-btn" class="dropdown-btn">
+            <div id="dropdown-profile-btn" class="dropdown-btn nav-btn">
                 <%- data.user.username %>
                 <div class="triangle"></div>
             </div>
-            <div id="dropdown-profile-content"  class="dropdown-content">
+            <div id="dropdown-profile-content"  class="dropdown-content dropdown-content-p">
                 <div id="profile-btn"><a href="/profile">Profile</a></div>
-                <div id="logout-btn"><a href="/logout">Logout</a></div>
+                <div class="dpLast"><a href="/logout">Logout</a></div>
             </div>
         </div>
 
         <% } else { %>
-        <div class="nav-item"><a href="/login">login</a></div>
-        <div class="nav-item"><a href="/signup">signup</a></div>
+        <div class="nav-item nav-btn"><a href="/login">login</a></div>
+        <div class="nav-item nav-btn"><a href="/signup">signup</a></div>
         <% } %>
     </div>
 
