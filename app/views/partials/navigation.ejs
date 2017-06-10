@@ -6,9 +6,18 @@
     </div>
 
     <div id="login-box">
-        <% if (data.isAuth) { %>
-        <div class="nav-item"><a href="/profile">profile</a></div>
-        <div class="nav-item"><a href="/logout">logout</a></div>
+        <% if (typeof data.user !== 'undefined' && typeof data.user !== '' ) { %>
+        <div id="dropdown-profile" class="nav-item">
+            <div id="dropdown-profile-btn" class="dropdown-btn">
+                <%- data.user.username %>
+                <div class="triangle"></div>
+            </div>
+            <div id="dropdown-profile-content"  class="dropdown-content">
+                <div id="profile-btn"><a href="/profile">Profile</a></div>
+                <div id="logout-btn"><a href="/logout">Logout</a></div>
+            </div>
+        </div>
+
         <% } else { %>
         <div class="nav-item"><a href="/login">login</a></div>
         <div class="nav-item"><a href="/signup">signup</a></div>

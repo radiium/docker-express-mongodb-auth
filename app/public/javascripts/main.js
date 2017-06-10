@@ -126,66 +126,41 @@ jQuery(document).ready(function() {
 
     // Display/Hideprofil
     $( '#consultProfilBtn' ).click(function() {
-        $('#profilstate').text('Profile');
-
-        $( '#consultProfilBtn' ).hide();
-        //$( '#editProfilBtn' ).show();
-        //$( '#deleteProfilBtn' ).show();
-
+        $( '#consultProfilBtn' ).addClass('active');
+        $( '#editProfilBtn' ).removeClass('active');
+        $( '#deleteProfilBtn' ).removeClass('active');
         $( '#profil-box' ).show();
         $( '#profil-box-edit' ).hide();
         $( '#profil-box-del' ).hide();
     });
 
     $( '#editProfilBtn' ).click(function() {
-        $('#profilstate').text('Edit profile');
-
-        $( '#consultProfilBtn' ).show();
-        //$( '#editProfilBtn' ).hide();
-        //$( '#deleteProfilBtn' ).show();
-        
+        $( '#consultProfilBtn' ).removeClass('active');
+        $( '#editProfilBtn' ).addClass('active');
+        $( '#deleteProfilBtn' ).removeClass('active');
         $( '#profil-box' ).hide();
         $( '#profil-box-edit' ).show();
         $( '#profil-box-del' ).hide();
     });
 
     $( '#deleteProfilBtn' ).click(function() {
-        $('#profilstate').text('Delete profile');
-
-        $( '#consultProfilBtn' ).show();
-        //$( '#editProfilBtn' ).show();
-        //$( '#deleteProfilBtn' ).hide();
-
+        $( '#consultProfilBtn' ).removeClass('active');
+        $( '#editProfilBtn' ).removeClass('active');
+        $( '#deleteProfilBtn' ).addClass('active');
         $( '#profil-box' ).hide();
         $( '#profil-box-edit' ).hide();
         $( '#profil-box-del' ).show();
     });
 
-    // Open close modal
-
-    // Infos popup
-    var isOpen = false;
-    function modal(title, content) {
-
-        $('#modal-title').text(title);
-        $('#modal-content').text(content);
-
-        if (!isOpen) {
-            $('#infos').css('top', '50px');
-            $( "#content" ).addClass( "blur" );
-            isOpen = true;
-        } else {
-            $('#infos').css('top', '-400px');
-            $( "#content" ).removeClass( "blur" );
-            isOpen = false;
-        }
-    }
-
-    $( '#modal-accept' ).click(function() {
-        mo
-
+ 
+    // drop down menu
+    $( '#dropdown-profile-btn' ).click(function(event) {
+        event.stopPropagation();
+        $( '#dropdown-profile-content' ).toggle()
+    })
+    $(document).on("click", function () {
+        $( '#dropdown-profile-content' ).hide();
     });
-    $( '#modal-decline' ).click(function() {
 
-    });
+
 });

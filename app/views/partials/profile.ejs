@@ -1,114 +1,117 @@
 <div id="profile">
     <div id="profile-toolbar">
-        <h1>
-            <span id="profilstate">Profile</span>
-
-            <div>
-                <input id="consultProfilBtn" type="button"  value="cancel" style="display: none;">
-                <input id="editProfilBtn"    type="button"  value="Edit">
-                <input id="deleteProfilBtn"  type="button"  value="Delete">
-            </div>
-        </h1>
-    </div>
-
-    <!-- Profil -->
-    <div id="profil-box" class="form-box" style="display: flex">
-
-        <div class="form-block-box">
-            <div class="field-box">
-            <label>ID:</label>
-            <input id="userid" type="text" value="<%- data.user.id %>" readonly >
-            </div>
-
-            <div class="field-box">
-            <label>NAME:</label>
-            <input id="username" type="text" value="<%- data.user.username %>" readonly>
-            </div>
-
-            <div class="field-box">
-            <label>MAIL:</label>
-            <input id="usermail" type="text" value="<%- data.user.usermail %>" readonly>
-            </div>
-
-            <div class="field-box">
-            <label>PASS:</label>
-            <input id="password" type="text" value="<%- data.user.password %>" readonly>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Edit Profil -->
-    <div id="profil-box-edit" class="form-box" style="display: none">
-
-        <span id="notif-update" class="notif"></span>
-
-        <!-- Update user name -->
-        <div class="form-block-box">
-            <div class="field-box">
-            <label>NAME: </label>
-            <input id="newUsername" type="text" value="<%- data.user.username %>">
-            </div>
-        </div>
-
-        <!-- Update mail -->
-        <div class="form-block-box">
-            
-            <span id="notif-mail" class="notif"></span>
-
-            <div class="field-box">
-            <label>New Mail: </label>
-            <input id="newUsermail" type="text" name="" value="<%- data.user.usermail %>">
-            </div>
-
-            <div class="field-box">
-            <label>Mail confirmation: </label>
-            <input id="newUsermail2" type="text" name="" value="">
-            </div>
-        </div>
-
-        <!-- Update password -->
-        <div class="form-block-box">
-
-            <span id="notif-pass" class="notif"></span>
-    
-            <div class="field-box">
-            <label>New Password: </label>
-            <input id="newPassword" type="password" name="newPassword" value="">
-            </div>
-
-            <div class="field-box">
-            <label>Password confirmation: </label>
-            <input id="newPassword2" type="password" name="newPassword2" value="">
-            </div>
-        </div>
-
-        <div class="form-block-box">
-            <div class="field-box">
-            <label>Current password: </label>
-            <input id="currentPassword" type="password" name="password" value="">
-            </div>
-        </div>
-
-        <div class="form-btn">
-            <input type="button" value="Submit"  onclick="updateProfil()"/>
+        <div id="btn-box">
+            <input id="consultProfilBtn" type="button"  value="Profile" class="profileBtn active">
+            <input id="editProfilBtn"    type="button"  value="Edit" class="profileBtn">
+            <input id="deleteProfilBtn"  type="button"  value="Delete" class="profileBtn">
         </div>
     </div>
 
-    <!-- Delete Profil -->
-    <div id="profil-box-del" class="form-box" style="display: none">
+    <div id="profile-content">
+        <!-- Profil -->
+        <div id="profil-box" class="form-box" style="display: flex">
 
-        <span id="notif-delete" class="notif"></span>
+            <div class="form-block-box">
+                <div class="field-box">
+                <label>ID:</label>
+                <input id="userid" type="text" value="<%- data.user.id %>" readonly >
+                </div>
+
+                <div class="field-box">
+                <label>NAME:</label>
+                <input id="username" type="text" value="<%- data.user.username %>" readonly>
+                </div>
+
+                <div class="field-box">
+                <label>MAIL:</label>
+                <input id="usermail" type="text" value="<%- data.user.usermail %>" readonly>
+                </div>
+
+                <div class="field-box">
+                <label>PASS:</label>
+                <input id="password" type="text" value="<%- data.user.password %>" readonly>
+                </div>
+            </div>
+        </div>
         
-        <div class="form-block-box">
-            <div class="field-box">
-            <label>Current password: </label>
-            <input id="currentPasswordDel" type="password" name="password" value="">
+        <!-- Edit Profil -->
+        <div id="profil-box-edit" class="form-box" style="display: none">
+
+            <div class="profil-box-edit-item">
+                <span id="notif-update" class="notif"></span>
+
+                <!-- Update user name -->
+                <div class="form-block-box">
+                    <div class="field-box">
+                    <label>NAME: </label>
+                    <input id="newUsername" type="text" value="<%- data.user.username %>">
+                    </div>
+                </div>
+
+                <!-- Update mail -->
+                <div class="form-block-box">
+                    
+                    <span id="notif-mail" class="notif"></span>
+
+                    <div class="field-box">
+                    <label>New Mail: </label>
+                    <input id="newUsermail" type="text" name="" value="<%- data.user.usermail %>">
+                    </div>
+
+                    <div class="field-box">
+                    <label>Confirm mail: </label>
+                    <input id="newUsermail2" type="text" name="" value="">
+                    </div>
+                </div>
+
+                <!-- Update password -->
+                <div class="form-block-box">
+
+                    <span id="notif-pass" class="notif"></span>
+            
+                    <div class="field-box">
+                    <label>New Password: </label>
+                    <input id="newPassword" type="password" name="newPassword" value="">
+                    </div>
+
+                    <div class="field-box">
+                    <label>Confirm password: </label>
+                    <input id="newPassword2" type="password" name="newPassword2" value="">
+                    </div>
+                </div>
+
+                <div class="form-block-box">
+                    <div class="field-box">
+                    <label>Current password: </label>
+                    <input id="currentPassword" type="password" name="password" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-btn submitBtn">
+                <input  type="button" value="Submit"  onclick="updateProfil()"/>
             </div>
         </div>
 
-        <div class="form-btn">
-            <input type="button" onclick="deleteProfil()"value="Delete"/>
+        <!-- Delete Profil -->
+        <div id="profil-box-del" class="form-box" style="display: none">
+
+            <div class="profil-box-del-item">
+                <span id="notif-delete" class="notif"></span>
+                
+                <div class="form-block-box">
+                    <div class="field-box">
+                    <label>Current password: </label>
+                    <input id="currentPasswordDel" type="password" name="password" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-btn submitBtn">
+                <input type="button" onclick="deleteProfil()"value="Delete"/>
+            </div>
         </div>
     </div>
+
 
 </div>
