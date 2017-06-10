@@ -4,21 +4,40 @@ jQuery(document).ready(function() {
     deleteProfil = function() {
         var data = {};
 
-        data.username = $('#username').val();
-        data.password = $('#currentPasswordDel').val();
+        if ($('#currentPasswordDel').val() !== '') {
+            data.username = $('#username').val();
+            data.password = $('#currentPasswordDel').val();
 
-        if (confirm('Delete user account?')) {
-            $.ajax({
-                method: "DELETE",
-                url: "/profile",
-                data: data,
-                success: function(data) {
-                    console.log(data);
-                },
-                error: function(err) {
-                    console.log(err);
+            $.confirm({
+                title: 'Delete user account?',
+                content: 'Oh no! Do you really want delete your user account?',
+                useBootstrap: false,
+                boxWidth: '40%',
+                buttons: {
+                    confirm: function () {
+                        $.ajax({
+                            method: "DELETE",
+                            url: "/profile",
+                            data: data,
+                            success: function(data) {
+                                console.log(data);
+                            },
+                            error: function(err) {
+                                console.log(err);
+                            }
+                        })
+                    },
+                    cancel: function () {}
                 }
-            })
+            });
+
+        } else {
+            $.alert({
+                title: 'Alert!',
+                content: 'You must type your password!',
+                useBootstrap: false,
+                boxWidth: '40%',
+            });
         }
     }
 
@@ -100,7 +119,6 @@ jQuery(document).ready(function() {
         }
     };
 
-
     isEqual = function(string1, string2) {
         if (string1 === string2) { return true; }
         return false;
@@ -111,8 +129,8 @@ jQuery(document).ready(function() {
         $('#profilstate').text('Profile');
 
         $( '#consultProfilBtn' ).hide();
-        $( '#editProfilBtn' ).show();
-        $( '#deleteProfilBtn' ).show();
+        //$( '#editProfilBtn' ).show();
+        //$( '#deleteProfilBtn' ).show();
 
         $( '#profil-box' ).show();
         $( '#profil-box-edit' ).hide();
@@ -123,8 +141,8 @@ jQuery(document).ready(function() {
         $('#profilstate').text('Edit profile');
 
         $( '#consultProfilBtn' ).show();
-        $( '#editProfilBtn' ).hide();
-        $( '#deleteProfilBtn' ).show();
+        //$( '#editProfilBtn' ).hide();
+        //$( '#deleteProfilBtn' ).show();
         
         $( '#profil-box' ).hide();
         $( '#profil-box-edit' ).show();
@@ -135,12 +153,39 @@ jQuery(document).ready(function() {
         $('#profilstate').text('Delete profile');
 
         $( '#consultProfilBtn' ).show();
-        $( '#editProfilBtn' ).show();
-        $( '#deleteProfilBtn' ).hide();
+        //$( '#editProfilBtn' ).show();
+        //$( '#deleteProfilBtn' ).hide();
 
         $( '#profil-box' ).hide();
         $( '#profil-box-edit' ).hide();
         $( '#profil-box-del' ).show();
     });
 
+    // Open close modal
+
+    // Infos popup
+    var isOpen = false;
+    function modal(title, content) {
+
+        $('#modal-title').text(title);
+        $('#modal-content').text(content);
+
+        if (!isOpen) {
+            $('#infos').css('top', '50px');
+            $( "#content" ).addClass( "blur" );
+            isOpen = true;
+        } else {
+            $('#infos').css('top', '-400px');
+            $( "#content" ).removeClass( "blur" );
+            isOpen = false;
+        }
+    }
+
+    $( '#modal-accept' ).click(function() {
+        mo
+
+    });
+    $( '#modal-decline' ).click(function() {
+
+    });
 });

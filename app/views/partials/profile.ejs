@@ -1,10 +1,15 @@
-<div>
-    <h1>
-        <span id="profilstate">Profile</span>
-        <input id="editProfilBtn"    type="button"  value="Edit">
-        <input id="deleteProfilBtn"  type="button"  value="Delete">
-        <input id="consultProfilBtn" type="button"  value="cancel" style="display: none;">
-    </h1>
+<div id="profile">
+    <div id="profile-toolbar">
+        <h1>
+            <span id="profilstate">Profile</span>
+
+            <div>
+                <input id="consultProfilBtn" type="button"  value="cancel" style="display: none;">
+                <input id="editProfilBtn"    type="button"  value="Edit">
+                <input id="deleteProfilBtn"  type="button"  value="Delete">
+            </div>
+        </h1>
+    </div>
 
     <!-- Profil -->
     <div id="profil-box" class="form-box" style="display: flex">
@@ -102,7 +107,7 @@
         </div>
 
         <div class="form-btn">
-            <input type="button" class="" value="Delete"  onclick="deleteProfil()"/>
+            <input type="button" onclick="deleteProfil()"value="Delete"/>
         </div>
     </div>
 
