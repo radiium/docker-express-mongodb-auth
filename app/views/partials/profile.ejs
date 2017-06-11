@@ -1,5 +1,35 @@
 <div id="profile">
+
     <div id="profile-toolbar">
+
+        <!-- User image -->
+        <div id="userimage-box">
+            <div id="userimage">
+                <% if (data.user.userimage !== '') { %>
+                <img src="/images/users/<%- data.user.userimage %>" alt="image of <%- data.user.username %>">
+                <% } else { %>
+                <img src="http://via.placeholder.com/160x160?text=<%- data.user.username %>" alt="image of <%- data.user.username %>">
+                <% } %>
+            </div>
+
+            <div id="userimage-form">
+                <div class='file-input'>
+                    <input  id="fileinput" type='file' name="userImage" accept="image/*">
+                    <span class='button'>Choose</span>
+                    <span id='filelabel' data-js-label>No file selected</label>
+                </div>
+                
+                <div class="form-btn submitBtn">
+                <input type='button' value='Upload!' onclick="uploadUserImage()" />
+                </div>
+
+                <% if (data.user.userimage !== '') { %>
+                <div class="form-btn submitBtn">
+                <input  type='button' value='Delete' onclick="deleteUserImage()" />
+                </div>
+                <% } %>
+            </div>
+        </div>
         <div id="btn-box">
             <input id="consultProfilBtn" type="button"  value="Profile" class="profileBtn active">
             <input id="editProfilBtn"    type="button"  value="Edit" class="profileBtn">
@@ -10,6 +40,7 @@
     <div id="profile-separator"></div>
 
     <div id="profile-content">
+
         <!-- Profil -->
         <div id="profil-box" class="form-box" style="display: flex">
 
@@ -39,54 +70,52 @@
         <!-- Edit Profil -->
         <div id="profil-box-edit" class="form-box" style="display: none">
 
-            <div class="profil-box-edit-item">
-                <span id="notif-update" class="notif"></span>
+            <span id="notif-update" class="notif"></span>
 
-                <!-- Update user name -->
-                <div class="form-block-box">
-                    <div class="field-box">
-                    <label>Name</label>
-                    <input id="newUsername" type="text" value="<%- data.user.username %>">
-                    </div>
+            <!-- Update user name -->
+            <div class="form-block-box">
+                <div class="field-box">
+                <label>Name</label>
+                <input id="newUsername" type="text" value="<%- data.user.username %>">
+                </div>
+            </div>
+
+            <!-- Update mail -->
+            <div class="form-block-box">
+                
+                <span id="notif-mail" class="notif"></span>
+
+                <div class="field-box">
+                <label>New mail</label>
+                <input id="newUsermail" type="text" name="" value="<%- data.user.usermail %>">
                 </div>
 
-                <!-- Update mail -->
-                <div class="form-block-box">
-                    
-                    <span id="notif-mail" class="notif"></span>
+                <div class="field-box">
+                <label>Confirm mail</label>
+                <input id="newUsermail2" type="text" name="" value="">
+                </div>
+            </div>
 
-                    <div class="field-box">
-                    <label>New mail</label>
-                    <input id="newUsermail" type="text" name="" value="<%- data.user.usermail %>">
-                    </div>
+            <!-- Update password -->
+            <div class="form-block-box">
 
-                    <div class="field-box">
-                    <label>Confirm mail</label>
-                    <input id="newUsermail2" type="text" name="" value="">
-                    </div>
+                <span id="notif-pass" class="notif"></span>
+        
+                <div class="field-box">
+                <label>New Password</label>
+                <input id="newPassword" type="password" name="newPassword" value="">
                 </div>
 
-                <!-- Update password -->
-                <div class="form-block-box">
-
-                    <span id="notif-pass" class="notif"></span>
-            
-                    <div class="field-box">
-                    <label>New Password</label>
-                    <input id="newPassword" type="password" name="newPassword" value="">
-                    </div>
-
-                    <div class="field-box">
-                    <label>Confirm password</label>
-                    <input id="newPassword2" type="password" name="newPassword2" value="">
-                    </div>
+                <div class="field-box">
+                <label>Confirm password</label>
+                <input id="newPassword2" type="password" name="newPassword2" value="">
                 </div>
+            </div>
 
-                <div class="form-block-box">
-                    <div class="field-box">
-                    <label>Current password</label>
-                    <input id="currentPassword" type="password" name="password" value="">
-                    </div>
+            <div class="form-block-box">
+                <div class="field-box">
+                <label>Current password</label>
+                <input id="currentPassword" type="password" name="password" value="">
                 </div>
             </div>
 
@@ -98,22 +127,19 @@
         <!-- Delete Profil -->
         <div id="profil-box-del" class="form-box" style="display: none">
 
-            <div class="profil-box-del-item">
-                <span id="notif-delete" class="notif"></span>
-                
-                <div class="form-block-box">
-                    <div class="field-box">
-                    <label>Current password</label>
-                    <input id="currentPasswordDel" type="password" name="password" value="">
-                    </div>
+            <span id="notif-delete" class="notif"></span>
+            
+            <div class="form-block-box">
+                <div class="field-box">
+                <label>Current password</label>
+                <input id="currentPasswordDel" type="password" name="password" value="">
                 </div>
             </div>
 
             <div class="form-btn submitBtn">
-                <input type="button" onclick="deleteProfil()"value="Delete"/>
+                <input type="button" onclick="deleteProfil()" value="Delete"/>
             </div>
         </div>
+
     </div>
-
-
 </div>

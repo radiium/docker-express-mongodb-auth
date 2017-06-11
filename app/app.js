@@ -15,8 +15,8 @@ var helmet        = require('helmet');
 var cookieParser  = require('cookie-parser');
 var bodyParser    = require('body-parser');
 var flash         = require("connect-flash");
+var fileUpload    = require('express-fileupload');
 
-//var MongoClient   = require('mongodb').MongoClient
 var mongo         = require('./services/mongoService');  
 var passport      = require('passport');  
 var LocalStrategy = require('passport-local').Strategy;
@@ -69,6 +69,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(helmet());
+app.use(fileUpload());
 
 
 
@@ -76,10 +77,10 @@ app.use(helmet());
 // Test MongoDB connection
 mongo.connect(function(err, db) {
     if (err) {
-        log.info('Test Mongodb connect => error');
+        log.info('[SERVER] [MongoDB] Test connection => error');
         process.exit(1)
     } else {
-        log.info('Test Mongodb connect => succes');
+        log.info('[SERVER] [MongoDB] Test connection => succes');
         db.close()
     }
 });

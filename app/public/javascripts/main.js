@@ -1,4 +1,57 @@
 jQuery(document).ready(function() {
+    $("#fileinput").val("");
+    
+    // upload user image
+    uploadUserImage = function() {
+        var file = $('#fileinput').prop('files')[0];
+        var formdata = new FormData();
+        formdata.append('file', file);
+
+        if (file) {
+            $.ajax({
+                url: '/profile/userimage',
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                data: formdata,
+                success: function (data) {
+                    console.log(data)
+                    if (data.status === 'success') {
+                        location.reload();
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        } else {
+            $.alert({
+                title: 'Alert!',
+                content: 'No image to upload!',
+                useBootstrap: false,
+                boxWidth: '40%',
+            });
+        }
+        $("#fileinput").val("");
+    };
+
+    deleteUserImage = function() {
+        $.ajax({
+            url: '/profile/userimage',
+            type: 'DELETE',
+            success: function (data) {
+                console.log(data)
+                if (data.status === 'success') {
+                    location.reload();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+        $("#fileinput").val("");
+    };
 
     // Delete profil
     deleteProfil = function() {
@@ -47,81 +100,102 @@ jQuery(document).ready(function() {
         var username     = $('#username').val();
         var password     = $('#currentPassword').val();
 
-        var newUsername  = $('#newUsername').val();
+        if (password !== '') {
+            var data = checkUpdateParams();
+            if (data.newUsername || data.newUsermail || data.newPassword) {
 
-        var newUsermail  = $('#newUsermail').val();
-        var newUsermail2 = $('#newUsermail2').val();
-        var isMailOk     = false;
+                console.log(data.newUsername);
+                console.log(data.newUsermail);
+                console.log(data.newPassword);
 
-        var newPassword  = $('#newPassword').val();
-        var newPassword2 = $('#newPassword2').val();
-        var isPassOk     = false;
+                // Get current user/pass 
+                data.username = username;
+                data.password = password;
 
-
-        if (newUsermail !== '' && newUsermail2 !== '') {
-            if (!isEqual(newUsermail, newUsermail2)) {
-                $( '#notif-mail' ).text('New mail not match!');
-                $( '#notif-mail' ).show();
-                isMailOk = false;
-            } else {
-                $( '#notif-mail' ).text('');
-                $( '#notif-mail' ).hide();
-                isMailOk = true;
+                $.ajax({
+                    method: "PUT",
+                    url: "/profile",
+                    data: data,
+                    success: function(data) {
+                        if (data.status === 'succes') {
+                            $( '#notif-update' ).addClass('notif-success');
+                            $( '#notif-update' ).text(data.msg);
+                            $( '#notif-update' ).show();
+                        } else if (data.status === 'error') {
+                            $( '#notif-update' ).addClass('notif-error');
+                            $( '#notif-update' ).text(data.msg);
+                            $( '#notif-update' ).show();
+                        }
+                    },
+                    error: function(err) {
+                        $( '#notif-update' ).addClass('notif-error');
+                        $( '#notif-update' ).text('Something went wrong, retry later! err: ' + err);
+                        $( '#notif-pass' ).show();
+                    }
+                });
             }
         } else {
-            isMailOk = true;
-        }
-
-        if (newPassword !== '' && newPassword2 !== '') {
-            if (!isEqual(newPassword, newPassword2)) {
-                $( '#notif-pass' ).text('New password not match!');
-                $( '#notif-pass' ).show();
-                isPassOk = false;
-            } else {
-                $( '#notif-pass' ).text('');
-                $( '#notif-pass' ).hide();
-                isPassOk = true;
-            }
-        } else {
-            isPassOk = true;
-        }
-
-        if (isMailOk && isPassOk) {
-
-            var data = {};
-            data.username = username;
-            data.password = password;
-            data.newUsername = newUsername;
-            data.newUsermail = newUsermail;
-            data.newPassword = newPassword;
-
-            $.ajax({
-                method: "PUT",
-                url: "/profile",
-                data: data,
-                success: function(data) {
-                    console.log('data');
-                    console.log(data);
-
-                    $( '#notif-update' ).addClass('notif-success');
-                    $( '#notif-update' ).text('Profile updated!');
-                    $( '#notif-update' ).show();
-                },
-                error: function(err) {
-                    console.log('err');
-                    console.log(err);
-
-                    $( '#notif-update' ).addClass('notif-error');
-                    $( '#notif-update' ).text('Something went wrong, retry later!');
-                    $( '#notif-pass' ).show();
-                }
+            $.alert({
+                title: 'Alert!',
+                content: 'You must type your password!',
+                useBootstrap: false,
+                boxWidth: '40%',
             });
         }
+        
     };
+
+    isEmpty = function(string1, string2) {
+        if (!string1 || string1 === null || string1 === undefined || string1 === '') { return true }
+        if (!string2 || string2 === null || string2 === undefined || string2 === '') { return true }
+        return false;
+    }
 
     isEqual = function(string1, string2) {
         if (string1 === string2) { return true; }
         return false;
+    }
+
+    checkUpdateParams = function() {
+        var data = {};
+
+        // Check if user name
+        var newUsername  = $('#newUsername').val();
+         if (!isEmpty(newUsername, "coucou")) {
+            data.newUsername = newUsername;
+         }
+
+        // Check new mail
+        var newUsermail  = $('#newUsermail').val();
+        var newUsermail2 = $('#newUsermail2').val();
+
+        if (!isEmpty(newUsermail, newUsermail2)) {
+            if (!isEqual(newUsermail, newUsermail2)) {
+                $( '#notif-mail' ).text('New mail not match!');
+                $( '#notif-mail' ).show();
+            } else {
+                $( '#notif-mail' ).text('');
+                $( '#notif-mail' ).hide();
+                data.newUsermail = newUsermail;
+            }
+        }
+
+        // Check new password
+        var newPassword  = $('#newPassword').val();
+        var newPassword2 = $('#newPassword2').val();
+
+        if (!isEmpty(newPassword, newPassword2)) {
+            if (!isEqualOrNull(newPassword, newPassword2)) {
+                $( '#notif-pass' ).text('New password not match!');
+                $( '#notif-pass' ).show();
+            } else {
+                $( '#notif-pass' ).text('');
+                $( '#notif-pass' ).hide();
+                data.newPassword = newPassword;
+            }
+        }
+
+        return data;
     }
 
     // Display/Hideprofil
@@ -170,5 +244,12 @@ jQuery(document).ready(function() {
         $( '#dropdown-add-content' ).hide();
     });
 
-
+    $("#fileinput").change(function(){
+        var filename = $('#fileinput').prop('files')[0]['name'];
+        if (filename) {
+            $('#filelabel').text(filename);
+        } else {
+            $('#filelabel').text('No file selected');
+        }
+    });
 });

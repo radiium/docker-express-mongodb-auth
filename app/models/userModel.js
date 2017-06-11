@@ -7,10 +7,11 @@ var log    = require('winston');
 //-----------------------------------------------------------------------------
 // Object user
 function User(user) {
-    this.id       = user.id;
-    this.username = user.username;
-    this.usermail = user.usermail;
-    this.password = user.password;
+    this.id        = user.id;
+    this.username  = user.username;
+    this.usermail  = user.usermail;
+    this.password  = user.password;
+    this.userimage = user.userimage;
 }
 
 module.exports = User;
@@ -20,10 +21,11 @@ module.exports = User;
 // save user data.
 User.prototype.save = function(callback) {
     var user = {
-        id:       this.id,
-        username: this.username,
-        usermail: this.usermail,
-        password: this.password
+        id:        this.id,
+        username:  this.username,
+        usermail:  this.usermail,
+        password:  this.password,
+        userimage: this.userimage
     };
 
     var db = mongo.get();
