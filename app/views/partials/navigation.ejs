@@ -1,11 +1,14 @@
 <div id="navigation">
 
+    <!-- Pages buttons -->
     <div id="nav-box">
         <div class="nav-item nav-btn"><a href="/">Home</a></div>
         <div class="nav-item nav-btn"><a href="">page2</a></div>
     </div>
 
     <div id="login-box">
+
+        <!-- Add content buttons -->
         <% if (typeof data.user !== 'undefined' && typeof data.user !== '' ) { %>
         <div id="dropdown-add" class="nav-item">
             <div id="dropdown-add-btn" class="dropdown-btn nav-btn">
@@ -18,8 +21,14 @@
             </div>
         </div>
 
+        <!-- Profile/Logout buttons -->
         <div id="dropdown-profile" class="nav-item">
             <div id="dropdown-profile-btn" class="dropdown-btn nav-btn">
+                <% if (data.user.userimage !== '') { %>
+                <div id="userimage-nav">
+                <img src="/images/users/<%- data.user.userimage %>" alt="image of <%- data.user.username %>">
+                </div>
+                <% } %>
                 <%- data.user.username %>
                 <div class="triangle"></div>
             </div>
@@ -29,6 +38,7 @@
             </div>
         </div>
 
+        <!-- Login/Signup buttons -->
         <% } else { %>
         <div class="nav-item nav-btn"><a href="/login">login</a></div>
         <div class="nav-item nav-btn"><a href="/signup">signup</a></div>

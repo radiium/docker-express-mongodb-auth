@@ -1,5 +1,7 @@
 var express = require('express');
 var log     = require('winston');
+var User    = require('../models/userModel');
+
 var router  = express.Router();
 
 
@@ -8,10 +10,13 @@ var router  = express.Router();
 router.get('/', function(req, res, next) {
     log.info('=> Get /');
 
-    var data = {};
-    data.title = 'home';
-    data.type  = 'home';
+    var data    = {};
+
+    data.title  = 'home';
+    data.type   = 'home';
+
     data.isAuth = req.isAuthenticated();
+    data.user = User.getSafeUserData(req);
 
     res.render('index', {data: data});
 });

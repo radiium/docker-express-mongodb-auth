@@ -4,6 +4,8 @@
         <title><%= data.title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel='stylesheet' href='/stylesheets/navbar.css' />
+        <link rel='stylesheet' href='/stylesheets/profile.css' />
         <script type='text/javascript' src="/javascripts/jquery-3.2.1.min.js"></script>
 
         <!-- Modal plugin -->
@@ -35,6 +37,9 @@
 
             <% } else if (data.type === 'error') { %>
                 <%- include('partials/error.ejs', {data: data}); %>
+
+            <% } else if (data.type === '404') { %>
+                <%- include('partials/404.ejs', {data: data}); %>
 
             <% } %>
         </div>

@@ -17,7 +17,8 @@ router.get('/profile', isLoggedIn, function(req, res) {
     data.type   = 'profile';
     data.isAuth = req.isAuthenticated();
     data.edit   = false;
-    data.user   = req.user;
+    data.user   = User.getSafeUserData(req);
+
 
     res.render('index', { data: data });
 });

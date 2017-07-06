@@ -131,3 +131,14 @@ User.validPassword = function(password, password2) {
 User.generateRandomId = function() {
     return crypto.randomBytes(12).toString('hex');
 }
+
+// Get user data without password 
+User.getSafeUserData = function(req) {
+    if (req.isAuthenticated()) {
+        var user = {};
+        user = req.user;
+        delete user['password'];
+        return user;
+    }
+    return undefined;
+}

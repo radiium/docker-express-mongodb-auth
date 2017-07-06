@@ -1,0 +1,99 @@
+/******************
+    navigation
+******************/
+#navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    background-color: #383838;
+    color: white;
+}
+
+#nav-box,
+#login-box {
+    display: flex;
+    flex-direction: row
+}
+
+.nav-btn,
+.nav-btn a {
+    height: 2rem;
+    line-height: 2rem;
+    margin: 0;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-btn:hover,
+.nav-btn:hover a {
+    background-color: #444444;
+}
+
+/* Drop Down menu */
+#dropdown-profile {
+    position: relative;
+}
+
+/* Drop Down Button */
+.dropdown-btn {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+
+.triangle {
+    margin-top: 12px;
+    margin-left: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 5px 0 5px;
+    border-color: darkgray transparent transparent transparent;
+}
+#cross {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Drop Down Content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f4f4f4 ;
+    width: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 2.7rem;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+    background-color: #e2e2e2
+}
+
+.dpLast {
+    border-top: 1px solid darkgray;
+}
+
+#userimage-nav {
+    width: 10px;
+    height: 10px;
+}
+
+#userimage-nav img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+}
