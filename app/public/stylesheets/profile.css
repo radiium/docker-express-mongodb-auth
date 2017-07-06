@@ -69,6 +69,8 @@
     cursor: default;
 }
 
+
+
 /* Form general */
 .form-box {
     display: flex;
@@ -79,6 +81,16 @@
 
 .form-block-box {
 
+}
+
+/* Title profile content */
+.title-form-block-box {
+    border-bottom: 1px solid darkgray;
+    margin-bottom: 17px;
+}
+.title-form-block-box h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* Field box LABEL/INPUT */
@@ -274,7 +286,7 @@ input[type='password']:focus {
 
 
 
-
+/* Media queries */
 @media screen and (max-width: 650px) {
     #profile {
         align-items: center;
@@ -283,14 +295,28 @@ input[type='password']:focus {
         max-width: 400px;
     }
 
+    #profile-toolbar {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        max-width: 400px;  
+    }
+    #profile-toolbar #btn-box {
+        height: 100%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+     #profile-toolbar #btn-box input {
+        width: 100%;
+    }
+
     #profile-toolbar,
     #profile-content {
         width: 100%;
         border-left: 0;
         padding-left: 0;
-    }
-
-    #profile-toolbar {
     }
 
     #profile-separator{
@@ -303,10 +329,22 @@ input[type='password']:focus {
 
     /* User image */
     #userimage {
-        margin: 0 auto;
+        margin-right: 20px;
+    }
+    #userimage-box {
+        margin: 0;
     }
     #userimage-form {
-        margin: 0 auto;
         width: 160px;
+    }
+
+    .title-form-block-box {
+        border: none;
+    }
+
+    .title-form-block-box h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-align: center;
     }
 }
