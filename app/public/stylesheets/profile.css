@@ -59,32 +59,7 @@
     margin-right: 15px;
 }
 
-@media screen and (max-width: 650px) {
-    #profile {
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        max-width: 400px;
-    }
 
-    #profile-toolbar,
-    #profile-content {
-        width: 100%;
-        border-left: 0;
-        padding-left: 0;
-    }
-
-    #profile-toolbar {
-    }
-
-    #profile-separator{
-        background-color: darkgray;
-        width: 100%;
-        height: 10px;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-}
 
 /* Profile content Form */
 #profil-box input {pointer-events:none;}
@@ -227,11 +202,32 @@ input[type='password']:focus {
             transform: translate(-50%,-50%);
 }
 
+#edituserimage {
+    border-radius: 3px;
+    background-color: white;
+    cursor: pointer;
+    opacity: 0.2;
+    border: 1px solid black;
+    margin: 3px;
+    right: 0;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAiklEQVQ4jd3OOw4BUQAF0IOtmBA7UFmNRKPSTqnRqfw6n72J1gZo3mteBvFmkhE3ueU9ufxrupijaAo74oErhnXBAe4BjGg/99kaI4wTdJqDncL4lqAHdHKx2IgWOdg5wWJX30CfsH3Os8sLbNcq1nuDbVvFYNEkBssKbJOLVYG1MJigDJ3VxX43T4T1SyhvnF5hAAAAAElFTkSuQmCC);
+    background-repeat: no-repeat;
+    background-position: left center; 
+    transition: all .2s;
+}
+
+#userimage:hover #edituserimage {
+    opacity: 1;
+}
+
 .file-input {
     display: inline-block;
     text-align: left;
     background: #fff;
-    width: 160px;
+    width: 100%;
     position: relative;
     border-radius: 3px;
 }
@@ -267,9 +263,50 @@ input[type='password']:focus {
     text-align: center;
     text-overflow: ellipsis;
     overflow: hidden;
-
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .file-input.-chosen > .label {
     opacity: 1;
+}
+
+
+
+
+
+@media screen and (max-width: 650px) {
+    #profile {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+    }
+
+    #profile-toolbar,
+    #profile-content {
+        width: 100%;
+        border-left: 0;
+        padding-left: 0;
+    }
+
+    #profile-toolbar {
+    }
+
+    #profile-separator{
+        background-color: darkgray;
+        width: 100%;
+        height: 10px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    /* User image */
+    #userimage {
+        margin: 0 auto;
+    }
+    #userimage-form {
+        margin: 0 auto;
+        width: 160px;
+    }
 }

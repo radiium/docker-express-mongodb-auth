@@ -10,13 +10,14 @@
                 <% } else { %>
                 <img src="http://via.placeholder.com/160x160/17d82d/383838?text=<%- data.user.username %>" alt="image of <%- data.user.username %>">
                 <% } %>
+                <div id="edituserimage"></div>
             </div>
 
-            <div id="userimage-form">
+            <div id="userimage-form" style="display: none;">
                 <div class='file-input'>
                     <input  id="fileinput" type='file' name="userImage" accept="image/*">
                     <span class='button'>Choose</span>
-                    <span id='filelabel' data-js-label>No file selected</label>
+                    <span id='filelabel' data-js-label>No file selected</span>
                 </div>
                 
                 <div class="form-btn submitBtn">

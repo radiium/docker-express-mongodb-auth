@@ -24,12 +24,7 @@
         <!-- Profile/Logout buttons -->
         <div id="dropdown-profile" class="nav-item">
             <div id="dropdown-profile-btn" class="dropdown-btn nav-btn">
-                <% if (data.user.userimage !== '') { %>
-                <div id="userimage-nav">
-                <img src="/images/users/<%- data.user.userimage %>" alt="image of <%- data.user.username %>">
-                </div>
-                <% } %>
-                <%- data.user.username %>
+                Hi <%- data.user.username %>!
                 <div class="triangle"></div>
             </div>
             <div id="dropdown-profile-content"  class="dropdown-content dropdown-content-p">
