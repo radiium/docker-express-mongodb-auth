@@ -1,8 +1,8 @@
 var express    = require('express');
-var log        = require('winston');
 var fileUpload = require('express-fileupload');
 var fs         = require('fs');
 var User       = require('../models/userModel');
+var log        = require('../services/loggerService');
 var isLoggedIn = require('../services/authService');
 var router     = express.Router();
 
@@ -158,7 +158,7 @@ router.post('/profile/userimage', function(req, res) {
         data = {};
     }
 
-    // Use the mv() method to place the file somewhere on your server 
+    // Use the mv() method to place the file somewhere on your server
     file.mv(userImageDir + fileName, function(err) {
         if (err) {
             data.status = 'error';

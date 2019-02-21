@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
 // Module dependencies.
-var log   = require('winston');
 var app   = require('../app');
 var debug = require('debug')('flux:server');
 var http  = require('http');
-var db    = require('../services/mongoService');  
+var log   = require('../services/loggerService');
+var db    = require('../services/mongoService');
 
 
 // Get port from environment and store in Express.
 var port = normalizePort(process.env.PORT || '8080');
 app.set('port', port);
- 
+
 //-----------------------------------------------------------------------------
 // Connect to mongoDB
 db.connect(function(err) {

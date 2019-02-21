@@ -1,7 +1,7 @@
 var mongo  = require('../services/mongoService');
 var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto');
-var log    = require('winston');
+var log    = require('../services/loggerService');
 
 
 //-----------------------------------------------------------------------------
@@ -28,8 +28,7 @@ User.prototype.save = function(callback) {
         userimage: this.userimage
     };
 
-    var db = mongo.get();
-    db.collection('users', function(err, collection) {
+    mongo.get().db().collection('users', function(err, collection) {
         if(err) { return callback(err); }
         collection.insert(user, {safe: true}, function(err, user) {
             callback(err, user); // return user data if success.
@@ -40,8 +39,7 @@ User.prototype.save = function(callback) {
 //-----------------------------------------------------------------------------
 // Update user infos
 User.update = function(username, user, callback) {
-    var db = mongo.get();
-    db.collection('users', function(err, collection) {
+    mongo.get().db().collection('users', function(err, collection) {
         if (err) { return callback(err); }
         collection.update(
         { username: username },
@@ -56,8 +54,7 @@ User.update = function(username, user, callback) {
 //-----------------------------------------------------------------------------
 // Delete user
 User.delete = function(username, callback) {
-    var db = mongo.get();
-    db.collection('users', function(err, collection) {
+    mongo.get().db().collection('users', function(err, collection) {
         if (err) { return callback(err); }
         collection.remove(
         { username: username },
@@ -73,8 +70,7 @@ User.delete = function(username, callback) {
 //-----------------------------------------------------------------------------
 // Get user data by Name
 User.getByName = function(username, callback) {
-    var db = mongo.get();
-    db.collection('users').findOne({username: username }, function(err, user) {
+    mongo.get().db().collection('users').findOne({username: username }, function(err, user) {
         if (!user) { return callback(); }
         log.info('getByName')
         //log.info(user)
@@ -85,8 +81,7 @@ User.getByName = function(username, callback) {
 //-----------------------------------------------------------------------------
 // Get user data by ID
 User.getById = function(id, callback) {
-    var db = mongo.get();
-    db.collection('users').findOne({id: id }, function(err, user) {
+    mongo.get().db().collection('users').findOne({id: id }, function(err, user) {
         if (!user) { return callback(); }
         log.info('getById')
         //log.info(user)
@@ -97,8 +92,7 @@ User.getById = function(id, callback) {
 //-----------------------------------------------------------------------------
 // Check if username or usermail exist
 User.check = function(username, usermail, callback) {
-    var db = mongo.get();
-    db.collection('users', function(err, collection) {
+    mongo.get().db().collection('users', function(err, collection) {
         if(err) { return callback(err); }
         collection.findOne({ $or : [
             { username: username },
@@ -132,7 +126,7 @@ User.generateRandomId = function() {
     return crypto.randomBytes(12).toString('hex');
 }
 
-// Get user data without password 
+// Get user data without password
 User.getSafeUserData = function(req) {
     if (req.isAuthenticated()) {
         var user = {};

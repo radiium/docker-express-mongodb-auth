@@ -1,7 +1,7 @@
 var express  = require('express');
 var passport = require('passport');
 var flash    = require("connect-flash");
-var log      = require('winston');
+var log      = require('../services/loggerService');
 var User     = require('../models/userModel');
 var router   = express.Router();
 
@@ -22,7 +22,7 @@ router.get('/signup', function (req, res) {
 });
 
 //-----------------------------------------------------------------------------
-// POST SignUp 
+// POST SignUp
 router.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/profile',
     failureRedirect: '/signup',

@@ -1,11 +1,9 @@
 var MongoClient = require('mongodb').MongoClient
-var log         = require('winston');
+var log         = require('./loggerService');
 
 
 // DB connection
-var state = {
-    db: null,
-}
+var instance = null;
 
 // DB url
 const _dbUrl = 'mongodb://' +
@@ -20,26 +18,25 @@ exports.url = _dbUrl;
 
 // Connect to the db
 exports.connect = function(done) {
-    if (state.db) { return done(); }
+    if (instance) { return done(); }
 
-    MongoClient.connect(_dbUrl, function(err, db) {
+    MongoClient.connect(_dbUrl, { useNewUrlParser: true }, function(err, result) {
         if (err) { return done(err); }
-        state.db = db;
-        done(null, db);
+        instance = result;
+        done(null, instance);
     })
 }
 
 // Get db connection
 exports.get = function() {
-    return state.db;
+    return instance;
 }
 
 // Close db connection
 exports.close = function(done) {
-    if (state.db) {
-        state.db.close(function(err, result) {
-            state.db   = null;
-            state.mode = null;
+    if (instance) {
+        instance.close(function(err, result) {
+            instance   = null;
             done(err);
         })
     }

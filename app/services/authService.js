@@ -1,11 +1,11 @@
-var log = require('winston');
+var log = require('./loggerService');
 
 // route middleware to make sure a user is logged in
 module.exports = function isLoggedIn(req, res, next) {
     log.info('=> isLoggedIn');
     //log.info(req.isAuthenticated());
     //log.info(req.session);
-    
+
     if (req.isAuthenticated()) {
         log.info('Already authenticated');
         return next();

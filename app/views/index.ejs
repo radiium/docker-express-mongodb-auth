@@ -31,6 +31,9 @@
             <% if (data.type === 'home') { %>
                 <%- include('partials/home.ejs', {data: data}); %>
 
+            <% } else if (data.type === 'page') { %>
+                <%- include('partials/page.ejs', {data: data}); %>
+
             <% } else if (data.type === 'login') { %>
                 <%- include('partials/login.ejs', {data: data}); %>
 
@@ -48,6 +51,6 @@
 
             <% } %>
         </div>
-        
+
     </body>
 </html>

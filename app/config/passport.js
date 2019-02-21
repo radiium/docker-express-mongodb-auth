@@ -1,7 +1,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var flash         = require("connect-flash");
 var User          = require('../models/userModel');
-var log           = require('winston');
+var log           = require('../services/loggerService');
 
 
 module.exports = function(passport) {
